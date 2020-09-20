@@ -1,7 +1,9 @@
 Ideas:
 
 	- Voting demographic
-	- Voting vs. race
+        (Voting vs. race)
+    
+    - Voting geography
 
 	- Voting vs. Religion
 
