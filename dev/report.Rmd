@@ -1,0 +1,176 @@
+---
+title: "Exploratory analysis of US election survey ANES"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+
+## Introduction 
+
+In this notebook, we are interested in the education distribution per party. 
+In other words, we look to answer: are more educated people more liberal or conservative? 
+
+In my experience in undergraduate and post-graduate, most people are liberal. 
+Thus my intuition is there will be a correlation between higher education degree and more liberal political view. 
+
+
+
+## Correlation of education and party identification
+
+Loading necessary packages
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(knitr)
+library(gridExtra)
+opts_knit$set(root.dir=normalizePath('../')) # change dir to project root
+```
+
+Import processed data. 
+We take a look at the education distribution of the voters versus political identification. 
+
+```{r}
+data1 <- read.csv("data/anes_edu.csv", header=TRUE)
+```
+
+For instance, in 2016, how many legit answers are there in total? 
+
+```{r}
+data2 <- data1[ data1$year == 2016,  ]
+print("Number of responses in 2016")
+dim(data2)[1]
+print("Number identified as democrat")
+sum(data2$partyID == 1)
+print("Number identified as republican")
+sum(data2$partyID == 3)
+```
+
+What are the education distribution among these? Let us sort by 
+
+```{r}
+print(c("Grade School", "High School", "Some Colleges", "College or higher"))
+print("Democrat")
+t((data2[data2$partyID == 1,] %>% count(eduID)*100/sum(data2$partyID == 1))[2])
+print("Republican")
+t((data2[data2$partyID == 3,] %>% count(eduID)*100/sum(data2$partyID == 3))[2])
+```
+It seems like so far in 2016, people who have college degrees and higher tend to identify themselves as democrat, though the ratio is not much higher. 
+
+Let us look at the data accross the years. This is slightly longer, thus relegated to `edu.R`
+
+```{r}
+# histogram time series to plot
+frequency <- data1 %>% count(year, eduID, partyID)
+
+# add new col number of people per party, rescale to fit frequency
+partySum <- (data1 %>% count(year, partyID))
+partySum.expanded <- partySum[ rep(row.names(partySum), each=4) , 2:3 ]
+
+# sort by frequency file by partyID
+frequency <- frequency[ order(frequency$year, frequency$partyID) , ]
+
+# then add new column of partySum
+frequency[, 5] <- partySum.expanded[, 2]                        
+
+# add new col of percentage
+frequency[, 6] <- frequency[, 4] / frequency[, 5] * 100
+
+# change labels
+names(frequency) <- c("year", "eduID", "partyID", 
+                      "count", "partySum", "percentage" )
+
+# change eduID labels
+eduLabel <- data.frame( 
+    ID = c(1,2,3,4), 
+    level = c("1 Grade School", "2 Highschool", "3 Some College", "4 College")
+)
+
+frequency$eduID <- eduLabel$level[ match(frequency$eduID, eduLabel$ID) ]
+
+# graph
+ggplot( 
+    data=frequency, 
+    aes(
+        x=year, 
+        y=percentage, 
+        colour=as.factor(partyID)
+        )
+) + 
+geom_point() + 
+geom_line() +
+facet_wrap(frequency$eduID ~ .) + 
+scale_color_manual(
+    name="Party Identification",
+    labels=c("Dem", "Ind", "Rep"),
+    values=c("blue","brown","red")
+) +
+scale_x_continuous( limits=c(1948,2020) )
+```
+
+Looking at the previous years tell a different story. It seems that across the years, a Democrat will likely in the first two categories (`Grade school` and `High School`), while a Republican will more likely in the other two (`Some colleges` and `College or higher`). To render our analysis more quantitative, let us look at the average across the years
+
+```{r}
+
+# count by eduID only
+dataBox <- (data1 %>% count(year, eduID))
+# Make two new columns of total Dem and Rep
+dataBox[, 4] <- (data1[ data1$partyID == 1, ] %>% count(year, eduID))$n
+dataBox[, 5] <- (data1[ data1$partyID == 3, ] %>% count(year, eduID))$n
+# input total number of dem and rep
+foo5 <- (data1 %>% count(year, partyID))$n
+foo6 <- as.data.frame(t(matrix(foo5, nrow=3, ncol=length(foo5)/3)))
+foo6.expanded <- foo6[ rep(row.names(foo6), each=4) , c(1,3) ]
+dataBox[, 6:7] <- foo6.expanded
+# probability
+dataBox[, 8] <- dataBox[, 4] / dataBox[, 6] * 100
+dataBox[, 9] <- dataBox[, 5] / dataBox[, 7] * 100
+# probability difference
+dataBox[, 10] <- dataBox[, 8] - dataBox[, 9]
+
+
+names(dataBox) <- c("year", "eduID", "tot", "dem", "rep",
+                 "demTot", "repTot", "P(dem)", "P(rep)", "spread")
+
+# plot
+dataBox$eduID <- as.factor(dataBox$eduID)
+ggplot(dataBox, aes(x=eduID, y=spread)) + geom_boxplot()
+```
+
+This boxplot indicates two things:
+* Less educated respondents tend to identify as democrats. More educated respondents tend to identify as republicans. 
+* 2016 is a outlier for the `college and higher` category, while 2012 is a outlier for the `some colleges` category. 
+
+
+
+## Correllation to `temperature` data
+
+Temperature data measure respondents' feeling toward a certain keyword. Let us take a look at a few significant keywords
+
+
+```{r}
+dataFull <- read.csv("data/anes_trimmed.csv", header=TRUE)
+
+data3 <- as.data.frame( 
+    cbind(dataFull$VCF0004,  dataFull$VCF0218, dataFull$VCF0110)
+)
+
+# clean NA and invalid entries and non valid temperatures
+data3 <- data3[ complete.cases(data3), ]
+data3 <- data3[(data3$V2 != 98) & (data3$V2 != 99), ]
+data3 <- data3[data3$V3 != 0, ]
+
+# year extract
+data4 <- data3[ data3$V1 == 2016, ]
+
+data3$V3 <- as.factor(data3$V3)
+data4$V3 <- as.factor(data4$V3)
+p1 <- ggplot(data3, aes(x=V3, y=V2)) + geom_boxplot()  
+p2 <- ggplot(data4, aes(x=V3, y=V2)) + geom_boxplot()
+
+grid.arrange(p1, p2, ncol=2)
+```
