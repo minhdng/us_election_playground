@@ -7,3 +7,4 @@
 .DS_Store
 
 # data files too heavy
+data/anes_timeseries_cdf_rawdata.txt
