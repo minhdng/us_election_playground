@@ -10,6 +10,7 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+
 ```{r packages, results="hide", message=FALSE}
 # Loading necessary packages
 library(dplyr)
@@ -22,13 +23,22 @@ opts_knit$set(root.dir=normalizePath('../')) # change dir to project root
 
 
 
-## Introduction 
+# 1. Introduction 
+
+The *American National Election Studies* (ANES) are surveys of voters in the U.S. on the national scale. For each presidential election since 1948, ANES collects response both before and after the election. The goal of ANES is to understand political behaviors using systematic surveys. ANES data and results are widely used by news outlets, election campaigns and political researchers.
+
+The *Time Series Cumulative Data* of ANES include answers from respondents from different years on selected questions asked in three or more ANES *time series* studies. Tremendous amount of efforts have been put into data consolidation as the questions and answers vary by year. 
+
+To understand its study design and data collection process, you are strongly encouraged to read the *codebooks*. 
 
 In this notebook, we are interested in the education distribution per party. 
-In other words, we look to answer: are more educated people more liberal or conservative? 
+Specifically, we look to answer: are more educated people more liberal or conservative? 
 
 In my experience in undergraduate and post-graduate, most people are liberal. 
 Thus my intuition is there will be a correlation between higher education degree and more liberal political view. 
+
+# 2. Access to ANES data
+## 2.1. 
 
 
 
