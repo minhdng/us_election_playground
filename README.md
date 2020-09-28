@@ -1,4 +1,4 @@
-# Education impact on American voting behavior
+# Education Impact on Voting Behavior
 
 ![](fig/vote.jpg)
 
@@ -6,11 +6,15 @@
 
 ## Description
 
-This project takes a glimpse into the education level between Democrat voters and Republican voters. 
+This project glimpses into the education level difference between Democrat voters and Republican voters. 
 
-Specifically, this report hopefully will help you understand what make up the majority of the voting bases, their preference, what they like, and dislike, about the parties of their choice. To potentially explain their voting choices, we also look at their feeling toward various issues, for instance, immigration.
+Specifically, this report aim to understand what make up the majority of the voting bases, their preferences, and what they like and dislike about the parties of their choice. To potentially explain their voting choices, we also look at their feeling toward various issues, for instance, immigration.
 
 The project also look closer into the voting trend in 2016. Through this exploratory analysis, we hypothesize that aggressive immigration agenda is a big factor of Trump's success 2016. 
+
+## Presentation
+
+See `doc/analysis` for full analysis.
 
 ## Organization of the project
 
@@ -23,6 +27,10 @@ proj/
 └── output/
 ```
 See the subfolder `README.md` file for more information. 
+
+## Bibliography
+
+This project relies on the American National Election Studies ([ANES](https://electionstudies.org)). 
 
 
 ## Collaborators
