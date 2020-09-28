@@ -8,3 +8,4 @@
 
 # data files too heavy
 data/anes_timeseries_cdf/*
+data/anes_timeseries_cdf_sav/*
