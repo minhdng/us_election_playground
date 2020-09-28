@@ -27,4 +27,4 @@ See the subfolder `README.md` file for more information.
 
 ## Collaborators
 
-*salmonkween*
+[salmonkween](https://github.com/salmonkween)
