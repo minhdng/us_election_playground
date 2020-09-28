@@ -30,7 +30,7 @@ See the subfolder `README.md` file for more information.
 
 ## Bibliography
 
-This project relies on the American National Election Studies ([ANES](https://electionstudies.org)). 
+This project relies on the American National Election Studies ([ANES](https://electionstudies.org)) time series data. 
 
 
 ## Collaborators
