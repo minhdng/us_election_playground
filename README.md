@@ -6,7 +6,7 @@
 
 ## Description
 
-This project glimpses into the education level difference between Democrat voters and Republican voters. 
+This project glimpses into the education level difference between Democratic voters and Republican voters. 
 
 Specifically, this report aim to understand what make up the majority of the voting bases, their preferences, and what they like and dislike about the parties of their choice. To potentially explain their voting choices, we also look at their feeling toward various issues, for instance, immigration.
 
@@ -16,7 +16,7 @@ The project also look closer into the voting trend in 2016. Through this explora
 
 See [`doc/analysis.html`](https://github.com/minhdng/us_election_playground/blob/master/doc/analysis.html) or [`doc/analysis.pdf`](https://github.com/minhdng/us_election_playground/blob/master/doc/analysis.pdf) for full analysis.
 
-## Organization of the project
+## Project Organization
 
 ```
 proj/
