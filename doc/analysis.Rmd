@@ -1,8 +1,8 @@
 ---
 title: 'A glimpse into the voters demographics: Democrats vs Republicans'
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 editor_options:
   chunk_output_type: console
 ---
@@ -20,6 +20,8 @@ library(tm)
 library(SnowballC)
 library(wordcloud)
 library(grid)
+library(tinytex)
+options(tinytex.verbose = TRUE)
 ```
 
 ```{r setup, echo=FALSE}
