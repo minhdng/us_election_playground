@@ -14,7 +14,7 @@ The project also look closer into the voting trend in 2016. Through this explora
 
 ## Presentation
 
-See [`doc/analysis.html`](https://github.com/minhdng/us_election_playground/blob/master/doc/analysis.html) for full analysis.
+See [`doc/analysis.html`](https://github.com/minhdng/us_election_playground/blob/master/doc/analysis.html) or [`doc/analysis.pdf`](https://github.com/minhdng/us_election_playground/blob/master/doc/analysis.pdf) for full analysis.
 
 ## Organization of the project
 
