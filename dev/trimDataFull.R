@@ -1,11 +1,8 @@
 library(tidyverse)
-library(knitr)
-opts_knit$set(root.dir=normalizePath('../'))
-
 
 # Load full data set
 # Note that this code is used locally to sprocess the full data
-dataFull <- read.table("data/anes_timeseries_cdf_rawdata.txt", 
+dataFull <- read.table("data/anes_timeseries_cdf/anes_timeseries_cdf_rawdata.txt", 
                         header=TRUE, sep=",", dec=".")
 
 # Output only neccessary data
@@ -58,11 +55,12 @@ dataTrimmed <- dataFull %>% select(  "VCF0004", # year
                                      "VCF0394b",
                                      "VCF0395b",
                                      "VCF0396b",
-                                     "VCF0397b"
+                                     "VCF0397b",
+                                     "VCF9223"
                              )
 
 # export to file
-write.csv(dataTrimmed, "data/anes_trimmed.csv", row.names = TRUE)
+write.csv(dataTrimmed, "output/anes_trimmed.csv", row.names = TRUE)
 
 
 

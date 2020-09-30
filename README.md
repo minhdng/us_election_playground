@@ -14,7 +14,7 @@ The project also look closer into the voting trend in 2016. Through this explora
 
 ## Presentation
 
-See `doc/analysis` for full analysis.
+See [`doc/analysis.html`]() for full analysis.
 
 ## Organization of the project
 
